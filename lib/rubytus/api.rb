@@ -15,7 +15,7 @@ module Rubytus
     def on_headers(env, headers)
       env['api.options'] = @options
       env['api.headers'] = {
-        'TUS-Resumable' => '1.0.0',
+        'Tus-Resumable' => '1.0.0',
         'Date' => Time.now.httpdate
       }
 

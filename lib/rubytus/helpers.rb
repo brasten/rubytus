@@ -93,10 +93,10 @@ module Rubytus
 
       if request.options?
         cors_headers['Access-Control-Allow-Methods']  = "POST, HEAD, PATCH, OPTIONS"
-        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Entity-Length, Offset, TUS-Resumable"
+        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Entity-Length, Offset, Tus-Resumable"
         cors_headers['Access-Control-Max-Age']        = "86400"
       else
-        cors_headers['Access-Control-Expose-Headers'] = "Offset, Location, Entity-Length, TUS-Version, TUS-Resumable, TUS-Max-Size, TUS-Extension"
+        cors_headers['Access-Control-Expose-Headers'] = "Offset, Location, Entity-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension"
       end
 
       cors_headers
@@ -105,8 +105,8 @@ module Rubytus
     def handle_collection(env, headers, request)
       if request.options?
         env['api.headers'].merge!({
-          'TUS-Extension' => SUPPORTED_EXTENSIONS.join(','),
-          'TUS-Max-Size'  => env['api.options'][:max_size].to_s
+          'Tus-Extension' => SUPPORTED_EXTENSIONS.join(','),
+          'Tus-Max-Size'  => env['api.options'][:max_size].to_s
         })
       end
 

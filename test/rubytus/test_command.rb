@@ -12,7 +12,7 @@ class TestRubytusCommand < MiniTest::Test
   end
 
   def protocol_header
-    { 'TUS-Resumable' => '1.0.0' }
+    { 'Tus-Resumable' => '1.0.0' }
   end
 
   def test_get_request_for_root
@@ -29,7 +29,7 @@ class TestRubytusCommand < MiniTest::Test
   def test_supported_version
     params = {
       :path => '/uploads/',
-      :head => { 'TUS-Resumable' => '0.0.1' }
+      :head => { 'Tus-Resumable' => '0.0.1' }
     }
 
     with_api(Rubytus::Command, default_options) do

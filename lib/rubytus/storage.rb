@@ -45,11 +45,11 @@ module Rubytus
       @options = options
     end
 
-    def create_file(uid, entity_length, metadata = {})
+    def create_file(uid, upload_length, metadata = {})
       fpath = file_path(uid)
       ipath = info_path(uid)
       info  = Rubytus::Info.new(metadata)
-      info.entity_length = entity_length
+      info.upload_length = upload_length
 
       begin
         File.open(fpath, 'w') {}

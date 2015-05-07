@@ -88,7 +88,7 @@ class TestRubytusCommand < MiniTest::Test
     end
   end
 
-  def test_post_request_for_collection_without_entity_length
+  def test_post_request_for_collection_without_upload_length
     params = {
       :path => '/uploads/',
       :head => protocol_header
@@ -101,16 +101,16 @@ class TestRubytusCommand < MiniTest::Test
     end
   end
 
-  def test_post_request_for_collection_with_negative_entity_length
+  def test_post_request_for_collection_with_negative_upload_length
     params = {
       :path => '/uploads/',
-      :head => protocol_header.merge({ 'Entity-Length' => '-1'})
+      :head => protocol_header.merge({ 'Upload-Length' => '-1'})
     }
 
     with_api(Rubytus::Command, default_options) do
       post_request(params, @err) do |c|
         assert_equal STATUS_BAD_REQUEST, c.response_header.status
-        assert_error_message "Invalid Entity-Length: -1. It should non-negative integer or string 'streaming'", c.response
+        assert_error_message "Invalid Upload-Length: -1. It should non-negative integer or string 'streaming'", c.response
       end
     end
   end
@@ -119,7 +119,7 @@ class TestRubytusCommand < MiniTest::Test
     params = {
       :path => '/uploads/',
       :head => protocol_header.merge({
-        'Entity-Length' => '10',
+        'Upload-Length' => '10',
         'Metadata'     => 'this-is-wrong'
       })
     }
@@ -136,7 +136,7 @@ class TestRubytusCommand < MiniTest::Test
     params = {
       :path => '/uploads/',
       :head => protocol_header.merge({
-        'Entity-Length' => '10',
+        'Upload-Length' => '10',
         'Metadata'     => ['filename', encode64('awesome-file.png'), 'mimetype', encode64('image/png')].join(' ')
       })
     }
@@ -154,7 +154,7 @@ class TestRubytusCommand < MiniTest::Test
     params = {
       :path => '/uploads/',
       :head => protocol_header.merge({
-        'Entity-Length' => '10',
+        'Upload-Length' => '10',
         'Origin'        => 'picocandy.io'
       })
     }
@@ -172,7 +172,7 @@ class TestRubytusCommand < MiniTest::Test
   def test_post_request_for_collection
     params = {
       :path => '/uploads/',
-      :head => protocol_header.merge({ 'Entity-Length' => '10' })
+      :head => protocol_header.merge({ 'Upload-Length' => '10' })
     }
 
     with_api(Rubytus::Command, default_options) do
@@ -205,7 +205,7 @@ class TestRubytusCommand < MiniTest::Test
       :body => 'abc',
       :head => protocol_header.merge({
         'Offset'        => '0',
-        'Entity-Length' => '3',
+        'Upload-Length' => '3',
         'Content-Type'  => 'plain/text'
       })
     }
@@ -231,7 +231,7 @@ class TestRubytusCommand < MiniTest::Test
       :body => 'abc',
       :head => protocol_header.merge({
         'Offset'        => '0',
-        'Entity-Length' => '3',
+        'Upload-Length' => '3',
         'Content-Type'  => 'application/offset+octet-stream'
       })
     }
@@ -257,7 +257,7 @@ class TestRubytusCommand < MiniTest::Test
       :body => 'abc',
       :head => protocol_header.merge({
         'Offset'        => '3',
-        'Entity-Length' => '3',
+        'Upload-Length' => '3',
         'Content-Type'  => 'application/offset+octet-stream'
       })
     }
@@ -271,7 +271,7 @@ class TestRubytusCommand < MiniTest::Test
 
   def test_patch_request_for_resource_exceed_remaining_length
     ruid = uid
-    info = Rubytus::Info.new(:offset => 0, :entity_length => 2)
+    info = Rubytus::Info.new(:offset => 0, :upload_length => 2)
 
     any_instance_of(Rubytus::Storage) do |klass|
       stub(klass).read_info(ruid) { info }
@@ -282,7 +282,7 @@ class TestRubytusCommand < MiniTest::Test
       :body => 'abcdef',
       :head => protocol_header.merge({
         'Offset'        => '0',
-        'Entity-Length' => '6',
+        'Upload-Length' => '6',
         'Content-Type'  => 'application/offset+octet-stream'
       })
     }
@@ -301,7 +301,7 @@ class TestRubytusCommand < MiniTest::Test
       :body => 'abc',
       :head => protocol_header.merge({
         'Offset'        => '0',
-        'Entity-Length' => '3',
+        'Upload-Length' => '3',
         'Content-Type'  => 'application/offset+octet-stream'
       })
     }

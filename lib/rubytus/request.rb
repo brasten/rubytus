@@ -42,7 +42,7 @@ module Rubytus
       "#{scheme}://#{host_with_port}#{base_path}#{uid}"
     end
 
-    def entity_length
+    def upload_length
       fetch_positive_header('HTTP_ENTITY_LENGTH')
     end
 
@@ -89,7 +89,7 @@ module Rubytus
       end
 
       if (header_name == 'HTTP_ENTITY_LENGTH') && (value < 0)
-        error!(STATUS_BAD_REQUEST, "Invalid Entity-Length: #{value}. It should non-negative integer or string 'streaming'")
+        error!(STATUS_BAD_REQUEST, "Invalid Upload-Length: #{value}. It should non-negative integer or string 'streaming'")
       end
 
       value

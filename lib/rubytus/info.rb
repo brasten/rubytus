@@ -4,7 +4,7 @@ module Rubytus
   class Info < Hash
     def initialize(args = {})
       self['Offset']       = args[:offset]        || 0
-      self['EntityLength'] = args[:entity_length] || 0
+      self['UploadLength'] = args[:upload_length] || 0
       self['Meta']         = args[:meta]          || nil
     end
 
@@ -16,16 +16,16 @@ module Rubytus
       self['Offset']
     end
 
-    def entity_length=(value)
-      self['EntityLength'] = value.to_i
+    def upload_length=(value)
+      self['UploadLength'] = value.to_i
     end
 
-    def entity_length
-      self['EntityLength']
+    def upload_length
+      self['UploadLength']
     end
 
     def remaining_length
-      entity_length - offset
+      upload_length - offset
     end
   end
 end

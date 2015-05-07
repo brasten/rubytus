@@ -93,10 +93,10 @@ module Rubytus
 
       if request.options?
         cors_headers['Access-Control-Allow-Methods']  = "POST, HEAD, PATCH, OPTIONS"
-        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Entity-Length, Offset, Tus-Resumable"
+        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Upload-Length, Offset, Tus-Resumable"
         cors_headers['Access-Control-Max-Age']        = "86400"
       else
-        cors_headers['Access-Control-Expose-Headers'] = "Offset, Location, Entity-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension"
+        cors_headers['Access-Control-Expose-Headers'] = "Offset, Location, Upload-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension"
       end
 
       cors_headers
@@ -115,7 +115,7 @@ module Rubytus
 
         env['api.action']        = :create
         env['api.uid']           = uid
-        env['api.entity_length'] = request.entity_length
+        env['api.upload_length'] = request.upload_length
         env['api.resource_url']  = request.resource_url(uid)
         env['api.metadata']      = parse_metadata(headers['Metadata'])
       end

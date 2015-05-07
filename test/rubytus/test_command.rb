@@ -120,14 +120,14 @@ class TestRubytusCommand < MiniTest::Test
       :path => '/uploads/',
       :head => protocol_header.merge({
         'Upload-Length' => '10',
-        'Metadata'     => 'this-is-wrong'
+        'Upload-Metadata'     => 'this-is-wrong'
       })
     }
 
     with_api(Rubytus::Command, default_options) do
       post_request(params, @err) do |c|
         assert_equal STATUS_BAD_REQUEST, c.response_header.status
-        assert_error_message 'Metadata must be a key-value pair', c.response
+        assert_error_message 'Upload-Metadata must be a key-value pair', c.response
       end
     end
   end
@@ -137,7 +137,7 @@ class TestRubytusCommand < MiniTest::Test
       :path => '/uploads/',
       :head => protocol_header.merge({
         'Upload-Length' => '10',
-        'Metadata'     => ['filename', encode64('awesome-file.png'), 'mimetype', encode64('image/png')].join(' ')
+        'Upload-Metadata'     => ['filename', encode64('awesome-file.png'), 'mimetype', encode64('image/png')].join(' ')
       })
     }
 

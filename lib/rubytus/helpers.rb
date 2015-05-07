@@ -74,7 +74,7 @@ module Rubytus
       arr = metadata.split(' ')
 
       if (arr.length % 2 == 1)
-        error!(STATUS_BAD_REQUEST, "Metadata must be a key-value pair")
+        error!(STATUS_BAD_REQUEST, "Upload-Metadata must be a key-value pair")
       end
 
       Hash[*arr].inject({}) do |h, (k, v)|
@@ -117,7 +117,7 @@ module Rubytus
         env['api.uid']           = uid
         env['api.upload_length'] = request.upload_length
         env['api.resource_url']  = request.resource_url(uid)
-        env['api.metadata']      = parse_metadata(headers['Metadata'])
+        env['api.metadata']      = parse_metadata(headers['Upload-Metadata'])
       end
     end
 

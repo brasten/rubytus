@@ -16,7 +16,7 @@ module Rubytus
     DEFAULT_MAX_SIZE       = 1073741824
 
     SUPPORTED_VERSIONS     = ['1.0.0']
-    SUPPORTED_EXTENSIONS   = ['file-creation']
+    SUPPORTED_EXTENSIONS   = ['creation']
 
     STATUS_OK                  = 200
     STATUS_CREATED             = 201

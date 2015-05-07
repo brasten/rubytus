@@ -24,7 +24,7 @@ module Rubytus
             if info.nil?
               status = STATUS_NOT_FOUND
             else
-              headers['Offset'] = info.offset.to_s
+              headers['Upload-Offset'] = info.upload_offset.to_s
             end
 
           when :get

@@ -3,17 +3,17 @@ require 'json'
 module Rubytus
   class Info < Hash
     def initialize(args = {})
-      self['Offset']       = args[:offset]        || 0
+      self['UploadOffset'] = args[:upload_offset] || 0
       self['UploadLength'] = args[:upload_length] || 0
       self['Meta']         = args[:meta]          || nil
     end
 
-    def offset=(value)
-      self['Offset'] = value.to_i
+    def upload_offset=(value)
+      self['UploadOffset'] = value.to_i
     end
 
-    def offset
-      self['Offset']
+    def upload_offset
+      self['UploadOffset']
     end
 
     def upload_length=(value)
@@ -25,7 +25,7 @@ module Rubytus
     end
 
     def remaining_length
-      upload_length - offset
+      upload_length - upload_offset
     end
   end
 end

@@ -74,12 +74,12 @@ module Rubytus
       end
     end
 
-    def patch_file(uid, data, offset = nil)
+    def patch_file(uid, data, upload_offset = nil)
       fpath = file_path(uid)
       begin
         f = File.open(fpath, 'r+b')
         f.sync = true
-        f.seek(offset) unless offset.nil?
+        f.seek(upload_offset) unless upload_offset.nil?
         f.write(data)
         size = f.size
         f.close
@@ -100,10 +100,10 @@ module Rubytus
       end
     end
 
-    def update_info(uid, offset)
+    def update_info(uid, upload_offset)
       ipath = info_path(uid)
       info = read_info(uid)
-      info.offset = offset
+      info.upload_offset = upload_offset
 
       begin
         File.open(ipath, 'w') do |f|

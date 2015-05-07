@@ -204,7 +204,7 @@ class TestRubytusCommand < MiniTest::Test
       :path => "/uploads/#{uid}",
       :body => 'abc',
       :head => protocol_header.merge({
-        'Offset'        => '0',
+        'Upload-Offset'        => '0',
         'Upload-Length' => '3',
         'Content-Type'  => 'plain/text'
       })
@@ -230,9 +230,9 @@ class TestRubytusCommand < MiniTest::Test
       :path => "/uploads/#{ruid}",
       :body => 'abc',
       :head => protocol_header.merge({
-        'Offset'        => '0',
+        'Upload-Offset'        => '0',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/offset+octet-stream'
+        'Content-Type'  => 'application/upload_offset+octet-stream'
       })
     }
 
@@ -244,9 +244,9 @@ class TestRubytusCommand < MiniTest::Test
     end
   end
 
-  def test_patch_request_for_resource_exceed_offset
+  def test_patch_request_for_resource_exceed_upload_offset
     ruid = uid
-    info = Rubytus::Info.new(:offset => 0)
+    info = Rubytus::Info.new(:upload_offset => 0)
 
     any_instance_of(Rubytus::Storage) do |klass|
       stub(klass).read_info(ruid) { info }
@@ -256,9 +256,9 @@ class TestRubytusCommand < MiniTest::Test
       :path => "/uploads/#{ruid}",
       :body => 'abc',
       :head => protocol_header.merge({
-        'Offset'        => '3',
+        'Upload-Offset'        => '3',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/offset+octet-stream'
+        'Content-Type'  => 'application/upload_offset+octet-stream'
       })
     }
 
@@ -271,7 +271,7 @@ class TestRubytusCommand < MiniTest::Test
 
   def test_patch_request_for_resource_exceed_remaining_length
     ruid = uid
-    info = Rubytus::Info.new(:offset => 0, :upload_length => 2)
+    info = Rubytus::Info.new(:upload_offset => 0, :upload_length => 2)
 
     any_instance_of(Rubytus::Storage) do |klass|
       stub(klass).read_info(ruid) { info }
@@ -281,9 +281,9 @@ class TestRubytusCommand < MiniTest::Test
       :path => "/uploads/#{ruid}",
       :body => 'abcdef',
       :head => protocol_header.merge({
-        'Offset'        => '0',
+        'Upload-Offset'        => '0',
         'Upload-Length' => '6',
-        'Content-Type'  => 'application/offset+octet-stream'
+        'Content-Type'  => 'application/upload_offset+octet-stream'
       })
     }
 
@@ -300,9 +300,9 @@ class TestRubytusCommand < MiniTest::Test
       :path => "/uploads/#{uid}",
       :body => 'abc',
       :head => protocol_header.merge({
-        'Offset'        => '0',
+        'Upload-Offset'        => '0',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/offset+octet-stream'
+        'Content-Type'  => 'application/upload_offset+octet-stream'
       })
     }
 
@@ -320,7 +320,7 @@ class TestRubytusCommand < MiniTest::Test
 
   def test_head_request_for_resource
     ruid = uid
-    info = Rubytus::Info.new(:offset => 3)
+    info = Rubytus::Info.new(:upload_offset => 3)
 
     any_instance_of(Rubytus::Storage) do |klass|
       stub(klass).read_info(ruid) { info }

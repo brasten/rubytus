@@ -25,9 +25,9 @@ module Rubytus
       end
     end
 
-    def validates_offset(req_offset, info_offset)
-      if req_offset > info_offset
-        error!(STATUS_FORBIDDEN, "Offset: #{req_offset} exceeds current offset: #{info_offset}")
+    def validates_upload_offset(req_upload_offset, info_upload_offset)
+      if req_upload_offset > info_upload_offset
+        error!(STATUS_FORBIDDEN, "Upload-Offset: #{req_upload_offset} exceeds current upload_offset: #{info_upload_offset}")
       end
     end
 
@@ -93,10 +93,10 @@ module Rubytus
 
       if request.options?
         cors_headers['Access-Control-Allow-Methods']  = "POST, HEAD, PATCH, OPTIONS"
-        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Upload-Length, Offset, Tus-Resumable"
+        cors_headers['Access-Control-Allow-Headers']  = "Origin, X-Requested-With, Content-Type, Upload-Length, Upload-Offset, Tus-Resumable"
         cors_headers['Access-Control-Max-Age']        = "86400"
       else
-        cors_headers['Access-Control-Expose-Headers'] = "Offset, Location, Upload-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension"
+        cors_headers['Access-Control-Expose-Headers'] = "Upload-Offset, Location, Upload-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension"
       end
 
       cors_headers
@@ -133,7 +133,7 @@ module Rubytus
 
         env['api.action']  = :patch
         env['api.buffers'] = ''
-        env['api.offset']  = request.offset
+        env['api.upload_offset']  = request.upload_offset
       end
 
       if request.get?

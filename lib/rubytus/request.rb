@@ -46,7 +46,7 @@ module Rubytus
       fetch_positive_header('HTTP_ENTITY_LENGTH')
     end
 
-    def offset
+    def upload_offset
       fetch_positive_header('HTTP_OFFSET')
     end
 

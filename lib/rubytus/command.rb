@@ -24,7 +24,7 @@ module Rubytus
           uid  = env['api.uid']
           info = storage.read_info(uid)
 
-          validates_offset(request.offset, info.offset)
+          validates_upload_offset(request.upload_offset, info.upload_offset)
           validates_length(request.content_length, info.remaining_length)
         end
 
@@ -35,7 +35,7 @@ module Rubytus
 
     def on_close(env)
       if env['api.action'] == :patch
-        storage.patch_file(env['api.uid'], env['api.buffers'], env['api.offset'])
+        storage.patch_file(env['api.uid'], env['api.buffers'], env['api.upload_offset'])
       end
     end
 

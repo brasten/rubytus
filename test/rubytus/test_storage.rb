@@ -48,12 +48,12 @@ class TestStorage < MiniTest::Test
 
   def test_read_info
     File.open(@storage.info_path(@uid), 'w') do |f|
-      f.write('{"Offset":100,"UploadLength":500,"Meta":null}')
+      f.write('{"UploadOffset":100,"UploadLength":500,"Meta":null}')
     end
 
     info = @storage.read_info(@uid)
     assert_kind_of Hash, info
-    assert_equal 100, info['Offset']
+    assert_equal 100, info['UploadOffset']
   end
 
   def test_read_info_failure
@@ -63,19 +63,19 @@ class TestStorage < MiniTest::Test
 
   def test_update_info
     File.open(@storage.info_path(@uid), 'w') do |f|
-      f.write('{"Offset":100,"UploadLength":500,"Meta":null}')
+      f.write('{"UploadOffset":100,"UploadLength":500,"Meta":null}')
     end
 
     @storage.update_info(@uid, 250)
 
     info = @storage.read_info(@uid)
     assert_kind_of Hash, info
-    assert_equal 250, info['Offset']
+    assert_equal 250, info['UploadOffset']
   end
 
   def test_update_info_failure
     storage = Rubytus::Storage.new(read_only_options)
-    stub(storage).read_info(@uid) { Rubytus::Info.new('Offset' => 100) }
+    stub(storage).read_info(@uid) { Rubytus::Info.new('UploadOffset' => 100) }
     assert_raises(Rubytus::PermissionError) { storage.update_info(@uid, 250) }
   end
 

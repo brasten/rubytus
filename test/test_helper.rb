@@ -40,12 +40,12 @@ module Rubytus
     def assert_tus_cors_option(headers, origin = '*')
       assert_equal origin, headers['Access-Control-Allow-Origin']
       assert_equal "POST, HEAD, PATCH, OPTIONS", headers['Access-Control-Allow-Methods']
-      assert_equal "Origin, X-Requested-With, Content-Type, Upload-Length, Offset, Tus-Resumable", headers['Access-Control-Allow-Headers']
+      assert_equal "Origin, X-Requested-With, Content-Type, Upload-Length, Upload-Offset, Tus-Resumable", headers['Access-Control-Allow-Headers']
       assert_equal "86400", headers['Access-Control-Max-Age']
     end
 
     def assert_tus_cors_expose(headers, origin = '*')
-      assert_equal "Offset, Location, Upload-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension", headers['Access-Control-Expose-Headers']
+      assert_equal "Upload-Offset, Location, Upload-Length, Tus-Version, Tus-Resumable, Tus-Max-Size, Tus-Extension", headers['Access-Control-Expose-Headers']
     end
 
     def assert_error_message(message, response)

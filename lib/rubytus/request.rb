@@ -43,11 +43,11 @@ module Rubytus
     end
 
     def upload_length
-      fetch_positive_header('HTTP_ENTITY_LENGTH')
+      fetch_positive_header('HTTP_UPLOAD_LENGTH')
     end
 
     def upload_offset
-      fetch_positive_header('HTTP_OFFSET')
+      fetch_positive_header('HTTP_UPLOAD_OFFSET')
     end
 
     def base_path
@@ -88,7 +88,7 @@ module Rubytus
         error!(STATUS_BAD_REQUEST, "#{header_orig} header must not be empty")
       end
 
-      if (header_name == 'HTTP_ENTITY_LENGTH') && (value < 0)
+      if (header_name == 'HTTP_UPLOAD_LENGTH') && (value < 0)
         error!(STATUS_BAD_REQUEST, "Invalid Upload-Length: #{value}. It should non-negative integer or string 'streaming'")
       end
 

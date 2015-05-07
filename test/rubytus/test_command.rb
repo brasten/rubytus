@@ -232,7 +232,7 @@ class TestRubytusCommand < MiniTest::Test
       :head => protocol_header.merge({
         'Upload-Offset'        => '0',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/upload_offset+octet-stream'
+        'Content-Type'  => 'application/offset+octet-stream'
       })
     }
 
@@ -258,7 +258,7 @@ class TestRubytusCommand < MiniTest::Test
       :head => protocol_header.merge({
         'Upload-Offset'        => '3',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/upload_offset+octet-stream'
+        'Content-Type'  => 'application/offset+octet-stream'
       })
     }
 
@@ -283,7 +283,7 @@ class TestRubytusCommand < MiniTest::Test
       :head => protocol_header.merge({
         'Upload-Offset'        => '0',
         'Upload-Length' => '6',
-        'Content-Type'  => 'application/upload_offset+octet-stream'
+        'Content-Type'  => 'application/offset+octet-stream'
       })
     }
 
@@ -302,7 +302,7 @@ class TestRubytusCommand < MiniTest::Test
       :head => protocol_header.merge({
         'Upload-Offset'        => '0',
         'Upload-Length' => '3',
-        'Content-Type'  => 'application/upload_offset+octet-stream'
+        'Content-Type'  => 'application/offset+octet-stream'
       })
     }
 
@@ -335,7 +335,7 @@ class TestRubytusCommand < MiniTest::Test
       head_request(params, @err) do |c|
         assert_tus_protocol c.response_header
         assert_equal STATUS_OK, c.response_header.status
-        assert_equal '3', c.response_header['OFFSET']
+        assert_equal '3', c.response_header['UPLOAD_OFFSET']
       end
     end
   end
@@ -356,7 +356,7 @@ class TestRubytusCommand < MiniTest::Test
       head_request(params, @err) do |c|
         assert_tus_protocol c.response_header
         assert_equal STATUS_NOT_FOUND, c.response_header.status
-        assert_equal nil, c.response_header['OFFSET']
+        assert_equal nil, c.response_header['UPLOAD_OFFSET']
       end
     end
   end
